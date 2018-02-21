@@ -8,40 +8,40 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Jinx extends JavaPlugin {
 
-  private static Jinx instance;
-  private Discord discord;
+    private static Jinx instance;
+    private Discord discord;
 
-  @Override
-  public void onEnable() {
-    instance = this;
-    this.saveDefaultConfig();
-    this.handleListeners();
-    this.handleDiscordConnection();
-  }
+    @Override
+    public void onEnable() {
+        instance = this;
+        saveDefaultConfig();
+        handleListeners();
+        handleDiscordConnection();
+    }
 
-  private void handleListeners() {
-    this.getServer().getPluginManager().registerEvents(new ChatEvent(), this);
-  }
+    private void handleListeners() {
+        this.getServer().getPluginManager().registerEvents(new ChatEvent(), this);
+    }
 
-  private void handleDiscordConnection() {
-    this.discord = new Discord.
-        Builder(this.getConfig().getString("discord.token"), new AnnotatedEventManager(),
-        this.getConfig().getString("discord.guildId"))
-        .listener(new MessageEvent()).build();
-  }
+    private void handleDiscordConnection() {
+        this.discord = new Discord.
+                Builder(getConfig().getString("discord.token"), new AnnotatedEventManager(),
+                getConfig().getString("discord.guildId"))
+                .listener(new MessageEvent()).build();
+    }
 
-  @Override
-  public void onDisable() {
-   if (this.discord != null) {
-     this.discord.getJda().shutdown();
-   }
-  }
+    @Override
+    public void onDisable() {
+        if (discord != null) {
+            discord.getJda().shutdown();
+        }
+    }
 
-  public Discord getDiscord() {
-    return this.discord;
-  }
+    public Discord getDiscord() {
+        return discord;
+    }
 
-  public static Jinx getInstance() {
-    return instance;
-  }
+    public static Jinx getInstance() {
+        return instance;
+    }
 }
