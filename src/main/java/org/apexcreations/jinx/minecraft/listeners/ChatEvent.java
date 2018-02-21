@@ -16,6 +16,5 @@ public class ChatEvent implements Listener {
     Jinx.getInstance().getDiscord().getJda().getGuilds().get(0)
         .getTextChannelsByName("general", true)
         .get(0).sendMessage(message).queue();
-    // Send message to discord using API
   }
 }
